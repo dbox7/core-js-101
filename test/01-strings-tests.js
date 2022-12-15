@@ -1,3 +1,11 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
+/* eslint-disable quote-props */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
+/* eslint-disable linebreak-style */
 const assert = require('assert');
 const tasks = require('../src/01-strings-tasks');
 it.optional = require('../extensions/it-optional');

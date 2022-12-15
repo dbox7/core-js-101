@@ -1,3 +1,8 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+/* eslint-disable linebreak-style */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                              *
@@ -8,7 +13,7 @@
 
 
 /**
- * Parses a rfc2822 string date representation into date value
+ *  * Parses a rfc2822 string date representation into date value
  * For rfc2822 date specification refer to : http://tools.ietf.org/html/rfc2822#page-14
  *
  * @param {string} value
@@ -35,7 +40,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   return Date.parse(value);
+  return Date.parse(value);
 }
 
 /**
@@ -53,7 +58,7 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-  return (date % 4 != 0 || date % 400 != 0) ? false : true;
+  return !((date % 4 !== 0 || date % 400 !== 0));
 }
 
 /**
@@ -72,16 +77,19 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(s, e) {
-  let hours = e.getHours() - s.getHours();
-  let minutes = e.getMinutes() - s.getMinutes();
-  let seconds = e.getSeconds() - s.getSeconds();
+  const hours = e.getHours() - s.getHours();
+  const minutes = e.getMinutes() - s.getMinutes();
+  const seconds = e.getSeconds() - s.getSeconds();
   let ms = e.getMilliseconds() - s.getMilliseconds();
 
   function check(data) {
-    return data > 10 ? data : '0' + data;
+    ms = data > 10 ? data : `0${data}`;
+    return ms;
   }
 
-  return `${check(hours)}:${check(minutes)}:${check(seconds)}.${(ms = check(ms)) > 100 ? ms : '0' + ms}`;
+  const res = `${check(hours)}:${check(minutes)}:${check(seconds)}.${(check(ms)) > 100 ? ms : `0${ms}`}`;
+
+  return res;
 }
 
 
@@ -105,15 +113,14 @@ function angleBetweenClockHands(date) {
   date = new Date(date);
   let ha;
   if (date.getHours() > 12) {
-    ha = (date.getHours() - 12) * Math.PI / 12;
+    ha = (date.getHours() - 12) * (Math.PI / 12);
   } else {
-    ha = date.getHours() * Math.PI / 12;
+    ha = date.getHours() * (Math.PI / 12);
   }
-  let ma = data.getMinutes() * Math.PI / 60;
-  return 
+  const ma = data.getMinutes() * (Math.PI / 60);
 }
 
-angleBetweenClockHands(Date.UTC(2016,3,5, 3, 0));
+// angleBetweenClockHands(Date.UTC(2016, 3, 5, 3, 0));
 
 
 module.exports = {

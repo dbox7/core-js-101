@@ -1,3 +1,9 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-plusplus */
+/* eslint-disable linebreak-style */
+// eslint-disable-next-line linebreak-style
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable linebreak-style */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                              *
@@ -201,11 +207,11 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  let str = '┌' + '─'.repeat(width - 2) + '┐\n';
+  let str = `┌${'─'.repeat(width - 2)}┐\n`;
   for (let i = 0; i < height - 2; i++) {
-    str += '|' + ' '.repeat(width - 2) + '|\n';
+    str += `│${' '.repeat(width - 2)}│\n`;
   }
-  str += '└' + '─'.repeat(width - 2) + '┘\n';
+  str += `└${'─'.repeat(width - 2)}┘\n`;
   return str;
 }
 
@@ -226,7 +232,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  return message.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
+  return str.replace(/[a-z]/gi, (letter) => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
 }
 
 /**
@@ -243,7 +249,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return (typeof value == 'string' || value instanceof String);
+  return (typeof value === 'string' || value instanceof String);
 }
 
 
@@ -272,10 +278,10 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  let arr = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-             'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-             'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-             'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'];
+  const arr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
   return arr.indexOf(value);
 }
 
