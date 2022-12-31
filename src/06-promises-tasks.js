@@ -1,4 +1,9 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-typeof */
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
+/* eslint-disable arrow-parens */
+/* eslint-disable no-unused-expressions */
 /* ************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -29,8 +34,13 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((res, rej) => {
+    if (typeof isPositiveAnswer !== 'boolean') {
+      rej(new Error('Error: Wrong parameter is passed!\n Ask her again'));
+    }
+    isPositiveAnswer ? res('Hooray!!! She said "Yes"!') : res('Oh no, she said "No".');
+  });
 }
 
 
@@ -49,9 +59,19 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  const res = [];
+  array.forEach(item => {
+    item.then(ans => res.push(ans));
+  });
+  return new Promise(resolve => resolve(res));
 }
+
+// const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)];
+// const p = processAllPromises(promises);
+// p.then((res) => {
+//   console.log(res);
+// });
 
 /**
  * Return Promise object that should be resolved with value received from
@@ -72,9 +92,32 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  const res = [];
+  return new Promise(resolve => {
+    array.forEach(item => {
+      item.then(ans => res.push(ans));
+    });
+    resolve(res[0]);
+  });
+  // array.forEach(item => {
+  //   item.then(ans => {
+  //     res.push(ans);
+  //     return p(resolve => resolve(res[0]));
+  //   });
+  // });
+  // return p;
 }
+
+const promises = [
+  new Promise(resolve => setTimeout(() => resolve('second'), 500)),
+  Promise.resolve('first'),
+  Promise.resolve('first1'),
+];
+const p = getFastestPromise(promises);
+p.then((res) => {
+  console.log(res);
+});
 
 /**
  * Return Promise object that should be resolved with value that is
