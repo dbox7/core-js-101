@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* *************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *

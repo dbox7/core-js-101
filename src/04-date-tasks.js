@@ -1,3 +1,8 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+/* eslint-disable linebreak-style */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                              *
@@ -8,7 +13,7 @@
 
 
 /**
- * Parses a rfc2822 string date representation into date value
+ *  * Parses a rfc2822 string date representation into date value
  * For rfc2822 date specification refer to : http://tools.ietf.org/html/rfc2822#page-14
  *
  * @param {string} value
@@ -19,8 +24,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return Date.parse(value);
 }
 
 /**
@@ -34,10 +39,9 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return Date.parse(value);
 }
-
 
 /**
  * Returns true if specified date is leap year and false otherwise
@@ -53,10 +57,9 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  return !((date % 4 !== 0 || date % 400 !== 0));
 }
-
 
 /**
  * Returns the string representation of the timespan between two dates.
@@ -73,8 +76,20 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(s, e) {
+  const hours = e.getHours() - s.getHours();
+  const minutes = e.getMinutes() - s.getMinutes();
+  const seconds = e.getSeconds() - s.getSeconds();
+  let ms = e.getMilliseconds() - s.getMilliseconds();
+
+  function check(data) {
+    ms = data > 10 ? data : `0${data}`;
+    return ms;
+  }
+
+  const res = `${check(hours)}:${check(minutes)}:${check(seconds)}.${(check(ms)) > 100 ? ms : `0${ms}`}`;
+
+  return res;
 }
 
 
@@ -94,9 +109,18 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  date = new Date(date);
+  let ha;
+  if (date.getHours() > 12) {
+    ha = (date.getHours() - 12) * (Math.PI / 12);
+  } else {
+    ha = date.getHours() * (Math.PI / 12);
+  }
+  const ma = data.getMinutes() * (Math.PI / 60);
 }
+
+// angleBetweenClockHands(Date.UTC(2016, 3, 5, 3, 0));
 
 
 module.exports = {

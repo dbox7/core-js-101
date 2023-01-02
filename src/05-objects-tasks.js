@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* ************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -20,10 +21,20 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  return {
+    width,
+    height,
+    getArea() {
+      return this.width * this.height;
+    },
+  };
 }
 
+// const r = new Rectangle(10, 20);
+// console.log(r.width); // => 10
+// console.log(r.height); // => 20
+// console.log(r.getArea());
 
 /**
  * Returns the JSON representation of specified object
@@ -35,10 +46,9 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
-
 
 /**
  * Returns the object of specified type from JSON representation
@@ -51,8 +61,10 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  let res = Object.create(proto);
+  res = JSON.parse(json);
+  return res;
 }
 
 
@@ -110,35 +122,84 @@ function fromJSON(/* proto, json */) {
  *  For more examples see unit tests.
  */
 
+class Builder {
+  element(arg) {
+    this.res += `${arg}`;
+    return this;
+  }
+
+  id(arg) {
+    this.res += `#${arg}`;
+    return this;
+  }
+
+  class(arg) {
+    this.res += `.${arg}`;
+    return this;
+  }
+
+  attr(arg) {
+    this.res += `[${arg}]`;
+    return this;
+  }
+
+  pseudoClass(arg) {
+    this.res += `:${arg}`;
+    return this;
+  }
+
+  pseudoElement(arg) {
+    this.res += `::${arg}`;
+    return this;
+  }
+
+  combine(selector1, combine, selector2) {
+    // if (typeof combine != 'string' || !(combine.includes(new RegExp()))) {
+    //   console.log('Enter right combine symbol');
+    //   return this;
+    // }
+    this.res += `${selector1.res} ${combine} ${selector2.res}`;
+    return this;
+  }
+
+  stringify() {
+    return this.res;
+  }
+}
+
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return new Builder().element(value);
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    return new Builder().id(value);
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    return new Builder().class(value);
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    return new Builder().attr(value);
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    return new Builder().pseudoClass(value);
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    return new Builder().pseudoElement(value);
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    return new Builder().combine(selector1, combinator, selector2);
   },
 };
+
+const B = cssSelectorBuilder;
+// B.element('div').id('super').class('up').attr('what').pseudoElement('more');
+B.combine(B.element('p').id('i'), ' ', B.element('p').id('ii')).stringify();
 
 
 module.exports = {
