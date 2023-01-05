@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-loop-func */
+/* eslint-disable no-const-assign */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable valid-typeof */
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
@@ -64,14 +68,14 @@ function processAllPromises(array) {
   array.forEach(item => {
     item.then(ans => res.push(ans));
   });
-  return new Promise(resolve => resolve(res));
+  return Promise.resolve(res);
 }
 
-// const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)];
-// const p = processAllPromises(promises);
-// p.then((res) => {
-//   console.log(res);
-// });
+const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)];
+const p = processAllPromises(promises);
+p.then((res) => {
+  console.log(res);
+});
 
 /**
  * Return Promise object that should be resolved with value received from
@@ -93,31 +97,22 @@ function processAllPromises(array) {
  *
  */
 function getFastestPromise(array) {
-  const res = [];
   return new Promise(resolve => {
-    array.forEach(item => {
-      item.then(ans => res.push(ans));
-    });
-    resolve(res[0]);
+    for (const item of array) {
+      item.then(ans => resolve(ans));
+    }
   });
-  // array.forEach(item => {
-  //   item.then(ans => {
-  //     res.push(ans);
-  //     return p(resolve => resolve(res[0]));
-  //   });
-  // });
-  // return p;
 }
 
-const promises = [
-  new Promise(resolve => setTimeout(() => resolve('second'), 500)),
-  Promise.resolve('first'),
-  Promise.resolve('first1'),
-];
-const p = getFastestPromise(promises);
-p.then((res) => {
-  console.log(res);
-});
+// const promises = [
+//   new Promise(resolve => setTimeout(() => resolve('second'), 500)),
+//   Promise.resolve('first'),
+//   Promise.resolve('first1'),
+// ];
+// const p = getFastestPromise(promises);
+// p.then((res) => {
+//   console.log(res);
+// });
 
 /**
  * Return Promise object that should be resolved with value that is
