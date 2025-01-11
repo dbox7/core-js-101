@@ -62,11 +62,13 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-  let res = Object.create(proto);
-  res = JSON.parse(json);
+  const res = Object.create(proto);
+  const entries = Object.entries(JSON.parse(json));
+  entries.forEach(([key, value]) => {
+    res[key] = value;
+  });
   return res;
 }
-
 
 /**
  * Css selectors builder
@@ -199,7 +201,7 @@ const cssSelectorBuilder = {
 
 const B = cssSelectorBuilder;
 // B.element('div').id('super').class('up').attr('what').pseudoElement('more');
-B.combine(B.element('p').id('i'), ' ', B.element('p').id('ii')).stringify();
+console.log(B.combine(B.element('p').id('i'), ' ', B.element('p').id('ii')).stringify());
 
 
 module.exports = {

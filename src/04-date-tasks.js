@@ -58,7 +58,8 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-  return !((date % 4 !== 0 || date % 400 !== 0));
+  return ((date.getFullYear() % 100 !== 0 || date.getFullYear() % 400 === 0)
+          && date.getFullYear() % 4 === 0);
 }
 
 /**
@@ -80,17 +81,19 @@ function timeSpanToString(s, e) {
   const hours = e.getHours() - s.getHours();
   const minutes = e.getMinutes() - s.getMinutes();
   const seconds = e.getSeconds() - s.getSeconds();
-  let ms = e.getMilliseconds() - s.getMilliseconds();
+  const ms = e.getMilliseconds() - s.getMilliseconds();
 
-  function check(data) {
-    ms = data > 10 ? data : `0${data}`;
-    return ms;
+  function check(data, n) {
+    data = data >= n ? data : `${String(n).slice(1)}${data}`;
+    return data;
   }
 
-  const res = `${check(hours)}:${check(minutes)}:${check(seconds)}.${(check(ms)) > 100 ? ms : `0${ms}`}`;
+  const res = `${check(hours, 10)}:${check(minutes, 10)}:${check(seconds, 10)}.${check(ms, 100)}`;
 
   return res;
 }
+
+// timeSpanToString(new Date(2000, 1, 1, 10, 0, 0), new Date(2000, 1, 1, 11, 0, 0))
 
 
 /**
@@ -111,16 +114,18 @@ function timeSpanToString(s, e) {
  */
 function angleBetweenClockHands(date) {
   date = new Date(date);
-  let ha;
-  if (date.getHours() > 12) {
-    ha = (date.getHours() - 12) * (Math.PI / 12);
-  } else {
-    ha = date.getHours() * (Math.PI / 12);
+  let h = date.getHours() - 3;
+  if (h < 0) {
+    h = 24 - (3 - date.getHours());
   }
-  const ma = data.getMinutes() * (Math.PI / 60);
+  if (h > 12) {
+    h -= 12;
+  }
+  const m = date.getMinutes();
+  let res = Math.abs((Math.PI / 360) * (60 * h - 11 * m));
+  res = res > Math.PI ? res - Math.PI : res;
+  return res;
 }
-
-// angleBetweenClockHands(Date.UTC(2016, 3, 5, 3, 0));
 
 
 module.exports = {
